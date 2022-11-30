@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  {# 引用全局样式 #}
+  <link rel="stylesheet" href="/static/common.css">
+
+  {# 引入 layui #}
+  <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+  <script type="javascript" rel="/static/lib/layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form" action="app/api/login">
+  <div class="layui-form-item">
+    <label class="layui-form-label">手机号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="phone_number" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+</body>
+</html>

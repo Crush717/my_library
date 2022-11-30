@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0003_alter_readertype_punish_rate'),
+        ('app', '0003_alter_readertype_punish_rate'),
     ]
 
     operations = [

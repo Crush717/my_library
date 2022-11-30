@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/zh-hans/4.1/howto/deployment/checklist/
 
@@ -25,110 +24,122 @@ SECRET_KEY = 'django-insecure-jm)1_99%ir5!o+!46b76vw93mo!%qb7op@5j#0iv)v9(_w%&#g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#allowed-hosts
+# 可以服务的主机／域名的字符串列表
+ALLOWED_HOSTS = ['*']
 
 # 应用定义
 INSTALLED_APPS = [
-    # 激活应用
-    'main.apps.MainConfig',
-    # Django 自带的应用
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+  # Django 自带的应用
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  # 注册应用
+  'app.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'my_library.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+      ],
     },
+  },
+  # 模板引擎 jinja2 配置：https://docs.djangoproject.com/zh-hans/4.1/topics/templates/#support-for-template-engines
+  {
+    'BACKEND': 'django.template.backends.jinja2.Jinja2',
+    'DIRS': [BASE_DIR / 'templates'],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      # Jinja2 环境的可调用对象，默认为 'jinja2.Environment'
+      'environment': 'my_library.jinja2.environment',
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+      ],
+    },
+  },
 ]
 
 WSGI_APPLICATION = 'my_library.wsgi.application'
 
-
 # 数据库：https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#databases
 DATABASES = {
-    'default': {
-        # 引擎
-        'ENGINE': 'django.db.backends.mysql',
-        # 数据库名
-        'NAME': 'my_library',
-        # 用户名
-        'USER': 'root',
-        # 密码
-        'PASSWORD': '',
-        # 主机
-        'HOST': 'localhost',
-        # 端口号
-        'PORT': '3306',
-        # 编码
-        'CHARSET': 'utf8mb4'
-    }
+  'default': {
+    # 引擎
+    'ENGINE': 'django.db.backends.mysql',
+    # 数据库名
+    'NAME': 'my_library',
+    # 用户名
+    'USER': 'root',
+    # 密码
+    'PASSWORD': '',
+    # 主机
+    'HOST': 'localhost',
+    # 端口号
+    'PORT': '3306',
+    # 编码
+    'CHARSET': 'utf8mb4'
+  }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+  {
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
-
 
 # 国际化：https://docs.djangoproject.com/zh-hans/4.1/topics/i18n/
 # 语言
 LANGUAGE_CODE = 'zh-Hans'
 # 时区
 TIME_ZONE = 'Asia/Shanghai'
-
 USE_I18N = True
 
-USE_TZ = True
+# https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#time-zone
+# 为 True 时，进行数据库读写时会使用运行机器时间，禁用时为 UTC 时间
+USE_TZ = False
 
-
-# Static files (CSS, JavaScript, Images)
+# 静态资源文件路径 (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/zh-hans/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
