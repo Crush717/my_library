@@ -56,7 +56,7 @@ ROOT_URLCONF = 'my_library.urls'
 TEMPLATES = [
   {
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [],
+    'DIRS': [BASE_DIR / 'templates'],
     'APP_DIRS': True,
     'OPTIONS': {
       'context_processors': [
@@ -125,6 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
   },
 ]
 
+# 重定向请求登录的 URL：https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#login-url
+# LOGIN_URL = '/login/'
+
 # 国际化：https://docs.djangoproject.com/zh-hans/4.1/topics/i18n/
 # 语言
 LANGUAGE_CODE = 'zh-Hans'
@@ -132,14 +135,11 @@ LANGUAGE_CODE = 'zh-Hans'
 TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
-# https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#time-zone
-# 为 True 时，进行数据库读写时会使用运行机器时间，禁用时为 UTC 时间
+# 为 True 时，进行数据库读写时会使用运行机器时间，禁用时为 UTC 时间：https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#time-zone
 USE_TZ = False
 
-# 静态资源文件路径 (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/zh-hans/4.1/howto/static-files/
+# 静态资源文件路径 (CSS, JavaScript, Images)：https://docs.djangoproject.com/zh-hans/4.1/howto/static-files/
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#default-auto-field
+# 默认主键类型：https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
