@@ -1,8 +1,11 @@
-import datetime
+import re
 
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
+from django.contrib.auth.models import User
+from passlib.hash import pbkdf2_sha256
 
+from my_library import constant
 from .models import ReaderType, Reader, Book, BorrowRecord
 
 # 管理页面顶部的文字
@@ -44,9 +47,36 @@ class ReaderAdminForm(forms.ModelForm):
   class Meta:
     model = Reader
     fields = '__all__'
+    widgets = {
+      # 密码输入框
+      Reader.password.field.name: forms.PasswordInput(),
+    }
+
+  def __init__(self, *args, **kwargs):
+    super(ReaderAdminForm, self).__init__(*args, **kwargs)
+    # 初始化时，密码字段设置为非必填，然后在 clean_password 中手动验证，因为编辑时，密码字段不填写则不修改密码
+    self.fields[Reader.password.field.name].required = False
 
   def clean(self):
+    # 验证读者编码
     Reader.gen_code()
+
+  def clean_phone_number(self):
+    """验证手机号"""
+    phone_number = self.cleaned_data.get(Reader.phone_number.field.name)
+    if phone_number and not re.match(constant.REGEX.phone_number, phone_number):
+      raise forms.ValidationError('手机号格式错误！')
+    return phone_number
+
+  def clean_password(self):
+    """编辑时验证密码是否为空"""
+    if not self.instance.pk:
+      password = self.cleaned_data.get(Reader.password.field.name)
+      if not password:
+        raise forms.ValidationError('这个字段是必填项。')
+      return password
+    # 返回原密码
+    return self.instance.password
 
 
 class ReaderAdmin(admin.ModelAdmin):
@@ -69,6 +99,8 @@ class ReaderAdmin(admin.ModelAdmin):
     if not change:
       # 生成读者编码
       obj.code = Reader.gen_code()
+      # 新增用户，用户名为读者手机号，密码为读者密码
+      User.objects.create_user(username=obj.phone_number, password=obj.password, first_name=obj.name)
     super().save_model(request, obj, form, change)
 
 
@@ -80,3 +112,5 @@ admin.site.register(ReaderType, ReaderTypeAdmin)
 admin.site.register(Reader, ReaderAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(BorrowRecord)
+
+# TODO 保存用户时，如果用户名全数字，提醒去创建读者

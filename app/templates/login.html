@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>登录</title>
+  <title>登录 | {% block title %}{% endblock %}</title>
   {# 引用全局样式 #}
   <link rel="stylesheet" href="/static/common.css">
 
@@ -55,22 +55,25 @@
     <div class="login-title">
       <h1>图书馆管理系统</h1>
     </div>
-    <form class="layui-form" action="app/api/login">
+    <form class="layui-form" action="/login/" method="post">{% csrf_token %}{% comment %}CSRF 校验：https://www.cnblogs.com/zhanghongfeng/p/7787499.html{% endcomment %}
       <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-inline">
-          <input type="text" name="phone_number" required lay-verify="required" placeholder="请输入手机号或用户名" autocomplete="off" class="layui-input">
+          <input type="text" name="username" required lay-verify="required" placeholder="请输入手机号或用户名" autocomplete="off" class="layui-input">
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
           <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+          {% if msg %}
+            <div style="padding-top: 10px; color: red;">{{ msg }}</div>
+          {% endif %}
         </div>
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block" style="text-align: right; margin-right: 10px">
-          <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+          <button class="layui-btn" lay-submit>登录</button>
         </div>
       </div>
     </form>

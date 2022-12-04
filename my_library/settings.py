@@ -56,7 +56,7 @@ ROOT_URLCONF = 'my_library.urls'
 TEMPLATES = [
   {
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [BASE_DIR / 'templates'],
+    'DIRS': [],
     'APP_DIRS': True,
     'OPTIONS': {
       'context_processors': [
@@ -126,7 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # 重定向请求登录的 URL：https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#login-url
-# LOGIN_URL = '/login/'
+LOGIN_URL = 'app:login'
+# 注销后重定向请求的 URL
+LOGOUT_REDIRECT_URL = 'app:login'
 
 # 国际化：https://docs.djangoproject.com/zh-hans/4.1/topics/i18n/
 # 语言
