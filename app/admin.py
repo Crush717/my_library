@@ -3,7 +3,6 @@ import re
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
-from passlib.hash import pbkdf2_sha256
 
 from my_library import constant
 from .models import ReaderType, Reader, Book, BorrowRecord

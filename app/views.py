@@ -35,7 +35,6 @@ class Login(View):
       return render(request, 'login.html', {'msg': '用户名或密码错误！'})
 
 
-@method_decorator(login_required, name='dispatch')
 class Index(View):
   def get(self, request):
     """
