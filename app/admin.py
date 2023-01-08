@@ -68,7 +68,7 @@ class ReaderAdminForm(forms.ModelForm):
     return phone_number
 
   def clean_password(self):
-    """编辑时验证密码是否为空"""
+    """新增时验证密码是否为空"""
     if not self.instance.pk:
       password = self.cleaned_data.get(Reader.password.field.name)
       if not password:

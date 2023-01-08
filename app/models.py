@@ -84,7 +84,7 @@ class Reader(models.Model):
     max_code = Reader.objects.all().aggregate(Max('code'))['code__max']
     # 如果数据库中没有数据，max_code 为 None
     if max_code is None:
-      max_code = 1
+      max_code = 0
     else:
       # 截取编码后四位
       max_code = int(max_code[8:])
